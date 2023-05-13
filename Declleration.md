@@ -1,0 +1,26 @@
+you are basically dividing the number of items that match a certain criterion by the total number of words in the sentence. This gives you a ratio that reflects how much the sentence contains that criterion. For example, for parameter 1, you are counting how many words in the sentence are proper nouns, such as names of people or places. You are using nltk.pos_tag() to tag each word with its part of speech and then filtering out the ones that have the tags NNP or NNPS, which stand for singular and plural proper nouns. You then divide this number by the length of the sentence to get the ratio of proper nouns. The higher this ratio, the more likely the sentence contains a custom name.
+
+For parameter 2, you are counting how many words in the sentence are numerical data, such as numbers or dates. You are using word.isdigit() to check if a word is composed of digits and then filtering out the ones that return True. You then divide this number by the length of the sentence to get the ratio of numerical data. The higher this ratio, the more likely the sentence contains numerical data.
+
+For parameter 3, you are counting how many pairs of sentences in the document are similar to each other based on a similarity threshold. You are using nltk.edit_distance() to measure the similarity between two sentences as the number of edits (insertions, deletions, or substitutions) required to transform one sentence into another. You then compare this number with a threshold that you define and count how many pairs of sentences pass this threshold. You then divide this number by the total number of possible pairs of sentences in the document, which is n choose 2, where n is the number of sentences. This gives you the ratio of connected nodes in a graph where each node is a sentence and each edge is a similarity relation. The higher this ratio, the more likely the sentences in the document are related to each other.
+
+For parameter 4, you are counting how many words in the sentence are also in the title of the document. You are assuming that you have access to the title and that you have tokenized it by word. You then compare each word in the title with each word in the sentence and count how many of them match. You then divide this number by the length of the sentence to get the ratio of words in title. The higher this ratio, the more likely the sentence contains the words in the title.
+
+For parameter 5, you are counting how many words in the sentence are also theme words of the document. Theme words are words that have high tf-idf values, which measure how important a word is to a document in a collection of documents. Tf-idf stands for term frequency-inverse document frequency and it is calculated as follows:
+
+Term frequency (tf) is how often a word appears in a document.
+Inverse document frequency (idf) is how rare a word is across a collection of documents.
+Tf-idf is the product of tf and idf.
+You are assuming that you have access to the whole document as a list of sentences and that you have joined them into one text and tokenized it by word. You then calculate the frequency distribution of words in text using nltk.FreqDist() and create a text collection object from text words using nltk.TextCollection(). You then use text_collection.tf_idf(word, text_words) to calculate the tf-idf value of each word in text collection and store them in a dictionary. You then sort this dictionary by values and select the top 10 percent as theme words. You then compare each theme word with each word in the sentence and count how many of them match. You then divide this number by the length of the sentence to get the ratio of theme words. The higher this ratio, the more likely the sentence contains theme words.
+
+
+To calculate the score of a sentence based on the parameters you gave, you need to do the following steps:
+
+Import the nltk package and download the necessary data12.
+Define a function that takes a sentence as input and returns a score as output.
+In the function, tokenize the sentence by word and by sentence using nltk.word_tokenize() and nltk.sent_tokenize()2.
+For each parameter, calculate the ratio of the relevant items to the length of the sentence. For example, for parameter 1, you can use nltk.pos_tag() to tag each word with its part of speech and count how many of them are proper nouns (NNP or NNPS) 2.
+For parameter 3, you need to define a similarity threshold and a way to measure the similarity between sentences. You can use nltk.edit_distance() to calculate the edit distance between two sentences and compare it with the threshold 1.
+For parameter 4, you need to have access to the title of the document and tokenize it by word. You can then compare each word in the title with each word in the sentence and count how many of them match.
+For parameter 5, you need to calculate the tf-idf value of each word in the document using nltk.FreqDist() and nltk.TextCollection() 1. You can then sort the words by their tf-idf values and select the top 10 percent as theme words. You can then compare each theme word with each word in the sentence and count how many of them match.
+Sum up the ratios for each parameter and return the final score.
