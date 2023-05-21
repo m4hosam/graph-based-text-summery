@@ -134,7 +134,7 @@ def sentence_score(sentence):
     # Parameter 5: ratio of theme words
     # Assume we have access to the whole document as a list of sentences
     document = ["Natural Language Processing tutorial Language with  filter Python", "This Language is a tutorial on how analyze to use NLTK for NLP.",
-                "You will learn Language  tutorial how to tokenize, filter, stem, tag, chunk, and analyze text."]
+                "You will learn Language   how to tokenize, filter, stem, tag, chunk, and analyze text."]
 
     stopwords_punctuation = set(stopwords + list(string.punctuation))
     # Join all sentences into one text
