@@ -50,17 +50,17 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
     score = 0
 
     # Parameter 1: ratio of proper nouns
-    tags = nltk.pos_tag(words)
+    tags = nltk.pos_tag(sentence_words)
     proper_nouns = [word for word,
                     tag in tags if tag == 'NNP' or tag == 'NNPS']
-    ratio_1 = len(proper_nouns) / len(words)
+    ratio_1 = len(proper_nouns) / len(sentence_words)
     # print(proper_nouns)
     print("params1:", ratio_1)
     score += ratio_1
 
     # Parameter 2: ratio of numerical data
-    numerical_data = [word for word in words if word.isdigit()]
-    ratio_2 = len(numerical_data) / len(words)
+    numerical_data = [word for word in sentence_words if word.isdigit()]
+    ratio_2 = len(numerical_data) / len(sentence_words)
     print("params2:", ratio_2)
     score += ratio_2
 
@@ -77,18 +77,18 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
 
     title_words = [word for word in title_words if word not in stopwords]
     # Count how many words in title are in sentence
-    matching_words = [word for word in words if word in title_words]
-    ratio_4 = len(matching_words) / len(words)
+    matching_words = [word for word in sentence_words if word in title_words]
+    ratio_4 = len(matching_words) / len(sentence_words)
     print("params4:", ratio_4)
     score += ratio_4
 
     # Parameter 5: ratio of theme words
-    print("sentence: ", words)
+    print("sentence: ", sentence_words)
     count = 0
     for word in theme_words_arr:
         count += sentence.count(word)
     print("Inside: ", theme_words_arr)
-    print("ratio5: ", count/len(words))
+    print("ratio5: ", count/len(sentence_words))
 
     return score
 
