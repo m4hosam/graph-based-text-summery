@@ -12,7 +12,7 @@ sentences = ['I am playing football',
              'The cat likes milk',
              'My manager is a nice guy',
              'My mother bought Pizza yesterday',
-             'Tank you for your email']
+             'Thank you for your email']
 
 similarity_matrix, G = compute_sentence_similarity_graph(
     sentences, model, tokenizer, method='glove')
