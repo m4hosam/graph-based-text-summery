@@ -84,11 +84,13 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
 
     # Parameter 5: ratio of theme words
     print("sentence: ", sentence_words)
-    count = 0
+    similar_to_theme_words = 0
     for word in theme_words_arr:
-        count += sentence.count(word)
+        similar_to_theme_words += sentence.count(word)
     print("Inside: ", theme_words_arr)
-    print("ratio5: ", count/len(sentence_words))
+    ratio_5 = similar_to_theme_words/len(sentence_words)
+    score += ratio_5
+    print("ratio5: ", ratio_5)
 
     return score
 
