@@ -92,20 +92,81 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
     score += ratio_5
     print("ratio5: ", ratio_5)
 
+    score = score/5
+
     return score
 
 
-# Assume we have access to the whole document as a list of sentences
-document = ["Natural Language Processing tutorial Language with  filter Python", "This Language is a tutorial on how analyze to use NLTK for NLP.",
-            "You will learn Language   how to tokenize, filter, stem, tag, chunk, and analyze text."]
+def separate_title_and_paragraph(text):
+    # Split the text into lines
+    lines = text.split('\n')
 
-# Define a sentence to test the function
-sentence = "This tutorial will teach you how to use NLTK for natural Language processing."
-# Call the function and print the result
+    # Find the first non-empty line as the title
+    title = ""
+    for line in lines:
+        line = line.strip()
+        if line != "":
+            title = line.strip()
+            break
 
-theme_words_arr = theme_words(document)
-print("Theme Words: ", theme_words_arr)
+    # Split the paragraph into an array of sentences
+    # Join the remaining lines after the title
+    paragraph = "\n".join(lines[lines.index(title)+1:])
+    sentences = paragraph.split('.')
 
-score = sentence_score(sentence, theme_words_arr,
-                       "Natural Language Processing with Python", 2)
-print("Score: ", score)
+    document = []
+    for sentence in sentences:
+        if (sentence.strip() != ""):
+            document.append(sentence.strip())
+
+    # Return the title and array of sentences
+    return title, document
+
+
+def calculate_document_score(text):
+    # Split the text into lines
+    title, document = separate_title_and_paragraph(text)
+
+    print("Title:", title)
+    print("Sentences:", document)
+    theme_words_arr = theme_words(document)
+    print("Theme Words: ", theme_words_arr)
+
+    for sentence in document:
+        score = sentence_score(sentence, theme_words_arr,
+                               title, 1)
+        print(f"\n\nScore[{sentence}]: ", score, "\n\n")
+
+
+# Example usage
+text = '''
+Gallery unveils interactive tree
+
+A Christmas tree that can receive text messages has been unveiled at London's Tate Britain art gallery.
+
+The spruce has an antenna which can receive Bluetooth texts sent by visitors to the Tate. The messages will be "unwrapped" by sculptor Richard Wentworth, who is responsible for decorating the tree with broken plates and light bulbs. It is the 17th year that the gallery has invited an artist to dress their Christmas tree. Artists who have decorated the Tate tree in previous years include Tracey Emin in 2002.
+
+The plain green Norway spruce is displayed in the gallery's foyer. Its light bulb adornments are dimmed, ordinary domestic ones joined together with string. The plates decorating the branches will be auctioned off for the children's charity ArtWorks. Wentworth worked as an assistant to sculptor Henry Moore in the late 1960s. His reputation as a sculptor grew in the 1980s, while he has been one of the most influential teachers during the last two decades. Wentworth is also known for his photography of mundane, everyday subjects such as a cigarette packet jammed under the wonky leg of a table.
+'''
+
+calculate_document_score(text)
+
+
+# title, document = separate_title_and_paragraph(text)
+
+# print("Title:", title.strip())
+# print("Sentences:", document)
+# for sentence in document:
+#     print("***", sentence)
+
+
+# # Define a sentence to test the function
+# sentence = "Its light bulb adornments are dimmed, ordinary domestic ones joined together with string"
+# # Call the function and print the result
+
+# theme_words_arr = theme_words(document)
+# print("Theme Words: ", theme_words_arr)
+
+# score = sentence_score(sentence, theme_words_arr,
+#                        title.strip(), 1)
+# print("Score: ", score)
