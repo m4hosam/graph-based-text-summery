@@ -28,8 +28,30 @@ class MainWindow(object):
     def show(self):
         self.main_win.show()
     
-    def generateCanvas(self):
-        self.m.plot()
+    def generateCanvas(self, mainText):
+        self.m.plot(mainText)
+
+    def readFile(self, fname):
+        file = open(fname,'r', encoding='utf-8')
+        fileContent = file.read()
+        fileContent = fileContent.split('Main:')
+        fileContent = fileContent[1].split('Summary:')
+        newLineSep = fileContent[0].split('\n')
+        fileContent = [paragraph.replace('\n','') for paragraph in fileContent]
+
+        mainTextSentences = fileContent[0].split('.')
+
+        summaryTextSentences = fileContent[1].split('.')
+
+        title = [i for i in newLineSep if i][0]
+        mainTextSentences = [i for i in mainTextSentences if i]
+        summaryTextSentences = [i for i in summaryTextSentences if i]
+        print(title)
+        print(mainTextSentences)
+        print(summaryTextSentences)
+
+        return title, mainTextSentences, summaryTextSentences
+
         
     def switchToMain(self):
         if(self.ui.FileNameTextEdit.text() == ""):
@@ -42,6 +64,7 @@ class MainWindow(object):
             self.ui.ErrorLabel.setText("invalid file format")
             return
         
+        self.ui.GloveModel_Radio.setChecked(True)
         self.ui.NagivationGroupBox.show()
         self.ui.GraphNav_Radio.setChecked(True)
         #call networkx graph function to generate graph
@@ -49,11 +72,14 @@ class MainWindow(object):
         self.ui.stackedWidget.setCurrentIndex(1)
 
         fname = self.ui.FileNameTextEdit.text()
-        file = open(fname,'r')
-        fileContent = file.read()
-        self.ui.OriginalTextBrowser.setText(fileContent)
+        [title, mainText, summaryText] = self.readFile(fname)
+        seperator = '. '
+        self.ui.title_label.setText(title)
+        self.ui.mainText_original.setText(seperator.join(mainText))
         #run summary function
-        self.ui.SummaryTextBrowser.setText(fileContent)
+        self.ui.manualSummary_original.setText(seperator.join(summaryText))
+        self.ui.manualSummary_summary.setText(seperator.join(summaryText))
+        # self.ui.processedSummary_summary.setText(fileContent)
 
         #run ROUGE function and display score
 
@@ -68,12 +94,15 @@ class MainWindow(object):
 
     def reloadGraph(self):
         benzerlikThreshold = self.ui.BenzerlikThresholdTextEdit.toPlainText()
-        benzerlikThreshold2 = self.ui.BenzerlikThresholdTextEdit_2.toPlainText()
+        cumleThreshold = self.ui.BenzerlikThresholdTextEdit_2.toPlainText()
+        model = 'glove' if self.ui.GloveModel_Radio.isChecked() else 'bert'
 
-        if benzerlikThreshold == "" or benzerlikThreshold2 == "":
+        [title, mainText, summaryText] = self.readFile(self.fname)
+
+        if benzerlikThreshold == "" or cumleThreshold == "":
             self.ui.optionsErrorLabel.setText("please enter numbers into both fields")
             return
-        elif not benzerlikThreshold.isnumeric() or not benzerlikThreshold2.isnumeric():
+        elif not benzerlikThreshold.isnumeric() or not cumleThreshold.isnumeric():
             self.ui.optionsErrorLabel.setText("please make sure both fields contain only numbers")
             return
         
@@ -81,17 +110,18 @@ class MainWindow(object):
         #run summary function
         #redraw graph and rewrite summary
         
-        self.generateCanvas()
+        self.generateCanvas(mainText)
         self.ui.optionsErrorLabel.setText("")
-        print(benzerlikThreshold, benzerlikThreshold2)
-        print(int(benzerlikThreshold) + int(benzerlikThreshold2))
+        print(model)
+        print(benzerlikThreshold, cumleThreshold)
+        print(float(benzerlikThreshold) + float(cumleThreshold))
 
-
-
+    
     def browsefiles(self):
         try:
-            fname = QFileDialog.getOpenFileName(None,'Open file', 'C:','Text files (*.txt)')
-            self.ui.FileNameTextEdit.setText(fname[0])
+            file = QFileDialog.getOpenFileName(None,'Open file', 'C:','Text files (*.txt)')
+            self.fname = file[0]
+            self.ui.FileNameTextEdit.setText(self.fname)
         except:
            print("error occurred")
 

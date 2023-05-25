@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1423, 860)
+        MainWindow.resize(1423, 911)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
-        self.stackedWidget.setGeometry(QtCore.QRect(20, 0, 1371, 781))
+        self.stackedWidget.setGeometry(QtCore.QRect(20, 0, 1371, 801))
         self.stackedWidget.setObjectName("stackedWidget")
         self.Intro_page = QtWidgets.QWidget()
         self.Intro_page.setObjectName("Intro_page")
@@ -43,10 +43,10 @@ class Ui_MainWindow(object):
         self.Graph_page = QtWidgets.QWidget()
         self.Graph_page.setObjectName("Graph_page")
         self.KeyGroupBox = QtWidgets.QGroupBox(self.Graph_page)
-        self.KeyGroupBox.setGeometry(QtCore.QRect(930, 130, 431, 301))
+        self.KeyGroupBox.setGeometry(QtCore.QRect(930, 130, 431, 191))
         self.KeyGroupBox.setObjectName("KeyGroupBox")
         self.gridLayoutWidget = QtWidgets.QWidget(self.KeyGroupBox)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(129, 19, 291, 271))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(129, 19, 291, 161))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -61,11 +61,11 @@ class Ui_MainWindow(object):
         self.AnlamsalLabel.setObjectName("AnlamsalLabel")
         self.gridLayout.addWidget(self.AnlamsalLabel, 0, 0, 1, 1)
         self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.KeyGroupBox)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 20, 101, 271))
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(10, 20, 101, 161))
         self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
         self.verticalLayout.setContentsMargins(10, 20, 10, 20)
-        self.verticalLayout.setSpacing(50)
+        self.verticalLayout.setSpacing(10)
         self.verticalLayout.setObjectName("verticalLayout")
         self.greenLabel = QtWidgets.QLabel(self.verticalLayoutWidget_2)
         self.greenLabel.setStyleSheet("background-color: rgb(170, 255, 127);")
@@ -124,6 +124,64 @@ class Ui_MainWindow(object):
         self.GraphLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.GraphLayout.setContentsMargins(0, 0, 0, 0)
         self.GraphLayout.setObjectName("GraphLayout")
+        self.groupBox = QtWidgets.QGroupBox(self.Graph_page)
+        self.groupBox.setGeometry(QtCore.QRect(930, 320, 431, 121))
+        self.groupBox.setObjectName("groupBox")
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.groupBox)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 20, 401, 92))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(20, 0, 20, 0)
+        self.horizontalLayout.setSpacing(30)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.GloveModel_Radio = QtWidgets.QRadioButton(self.horizontalLayoutWidget)
+        self.GloveModel_Radio.setMinimumSize(QtCore.QSize(0, 50))
+        self.GloveModel_Radio.setStyleSheet("QRadioButton::indicator {\n"
+"    width: 0px;\n"
+"    height: 0px;\n"
+"}\n"
+"\n"
+"QRadioButton{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-color: rgb(81, 81, 81);\n"
+"    border-style: solid;\n"
+"    border-width: 5px;\n"
+"    border-radius: 10px;\n"
+"}\n"
+"\n"
+"QRadioButton::checked{\n"
+"    \n"
+"    background-color: rgb(194, 194, 194);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.GloveModel_Radio.setObjectName("GloveModel_Radio")
+        self.horizontalLayout.addWidget(self.GloveModel_Radio)
+        self.BertModel_Radio = QtWidgets.QRadioButton(self.horizontalLayoutWidget)
+        self.BertModel_Radio.setMinimumSize(QtCore.QSize(0, 50))
+        self.BertModel_Radio.setStyleSheet("QRadioButton::indicator {\n"
+"    width: 0px;\n"
+"    height: 0px;\n"
+"}\n"
+"\n"
+"QRadioButton{\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-color: rgb(81, 81, 81);\n"
+"    border-style: solid;\n"
+"    border-width: 5px;\n"
+"    border-radius: 10px;\n"
+"}\n"
+"\n"
+"QRadioButton::checked{\n"
+"    \n"
+"    background-color: rgb(194, 194, 194);\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.BertModel_Radio.setObjectName("BertModel_Radio")
+        self.horizontalLayout.addWidget(self.BertModel_Radio)
         self.stackedWidget.addWidget(self.Graph_page)
         self.Summary_page = QtWidgets.QWidget()
         self.Summary_page.setObjectName("Summary_page")
@@ -133,15 +191,49 @@ class Ui_MainWindow(object):
         self.RogueScoreLabel = QtWidgets.QLabel(self.Summary_page)
         self.RogueScoreLabel.setGeometry(QtCore.QRect(1140, 270, 91, 61))
         self.RogueScoreLabel.setObjectName("RogueScoreLabel")
-        self.SummaryTextBrowser = QtWidgets.QTextBrowser(self.Summary_page)
-        self.SummaryTextBrowser.setGeometry(QtCore.QRect(0, 20, 921, 761))
-        self.SummaryTextBrowser.setObjectName("SummaryTextBrowser")
+        self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.Summary_page)
+        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(0, 20, 931, 761))
+        self.verticalLayoutWidget_5.setObjectName("verticalLayoutWidget_5")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_5)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.label_3 = QtWidgets.QLabel(self.verticalLayoutWidget_5)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout_5.addWidget(self.label_3)
+        self.manualSummary_summary = QtWidgets.QTextBrowser(self.verticalLayoutWidget_5)
+        self.manualSummary_summary.setObjectName("manualSummary_summary")
+        self.verticalLayout_5.addWidget(self.manualSummary_summary)
+        self.label_4 = QtWidgets.QLabel(self.verticalLayoutWidget_5)
+        self.label_4.setObjectName("label_4")
+        self.verticalLayout_5.addWidget(self.label_4)
+        self.processedSummary_summary = QtWidgets.QTextBrowser(self.verticalLayoutWidget_5)
+        self.processedSummary_summary.setObjectName("processedSummary_summary")
+        self.verticalLayout_5.addWidget(self.processedSummary_summary)
         self.stackedWidget.addWidget(self.Summary_page)
         self.OriginalText_page = QtWidgets.QWidget()
         self.OriginalText_page.setObjectName("OriginalText_page")
-        self.OriginalTextBrowser = QtWidgets.QTextBrowser(self.OriginalText_page)
-        self.OriginalTextBrowser.setGeometry(QtCore.QRect(0, 20, 921, 761))
-        self.OriginalTextBrowser.setObjectName("OriginalTextBrowser")
+        self.verticalLayoutWidget_4 = QtWidgets.QWidget(self.OriginalText_page)
+        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(0, 50, 931, 731))
+        self.verticalLayoutWidget_4.setObjectName("verticalLayoutWidget_4")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_4)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.label_2 = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_4.addWidget(self.label_2)
+        self.mainText_original = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.mainText_original.setObjectName("mainText_original")
+        self.verticalLayout_4.addWidget(self.mainText_original)
+        self.label = QtWidgets.QLabel(self.verticalLayoutWidget_4)
+        self.label.setObjectName("label")
+        self.verticalLayout_4.addWidget(self.label)
+        self.manualSummary_original = QtWidgets.QTextBrowser(self.verticalLayoutWidget_4)
+        self.manualSummary_original.setObjectName("manualSummary_original")
+        self.verticalLayout_4.addWidget(self.manualSummary_original)
+        self.title_label = QtWidgets.QLabel(self.OriginalText_page)
+        self.title_label.setGeometry(QtCore.QRect(10, 20, 161, 21))
+        self.title_label.setText("")
+        self.title_label.setObjectName("title_label")
         self.stackedWidget.addWidget(self.OriginalText_page)
         self.NagivationGroupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.NagivationGroupBox.setGeometry(QtCore.QRect(950, 10, 431, 111))
@@ -213,6 +305,9 @@ class Ui_MainWindow(object):
 "\n"
 "")
         self.SummaryNav_Radio.setObjectName("SummaryNav_Radio")
+        self.home_button = QtWidgets.QPushButton(self.centralwidget)
+        self.home_button.setGeometry(QtCore.QRect(20, 800, 93, 31))
+        self.home_button.setObjectName("home_button")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1423, 26))
@@ -236,7 +331,7 @@ class Ui_MainWindow(object):
         self.ThresholdLabel.setText(_translate("MainWindow", "Benzerlik thresholdu"))
         self.AnlamsalLabel.setText(_translate("MainWindow", "Anlamsal Benzerlik"))
         self.groupBox_5.setTitle(_translate("MainWindow", "options"))
-        self.label_8.setText(_translate("MainWindow", "Cümle skorunun belirlenmesi için threshold seçilebilecek bir araç."))
+        self.label_8.setText(_translate("MainWindow", "cumle skoru thresholdu "))
         self.label_9.setText(_translate("MainWindow", "Benzerlik thresholdu"))
         self.BenzerlikThresholdTextEdit.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -249,14 +344,21 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.ReloadButton.setText(_translate("MainWindow", "Relaod"))
+        self.groupBox.setTitle(_translate("MainWindow", "Model"))
+        self.GloveModel_Radio.setText(_translate("MainWindow", "glove"))
+        self.BertModel_Radio.setText(_translate("MainWindow", "bert"))
         self.RougeScoreTextLabel.setText(_translate("MainWindow", "ROUGE score:"))
         self.RogueScoreLabel.setText(_translate("MainWindow", "[ROUGE score]"))
-        self.SummaryTextBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_3.setText(_translate("MainWindow", "manual summary"))
+        self.label_4.setText(_translate("MainWindow", "nltk summary"))
+        self.processedSummary_summary.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.OriginalTextBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_2.setText(_translate("MainWindow", "input text"))
+        self.label.setText(_translate("MainWindow", "manual summary"))
+        self.manualSummary_original.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
@@ -265,13 +367,4 @@ class Ui_MainWindow(object):
         self.OriginalNav_Radio.setText(_translate("MainWindow", "Original Text"))
         self.GraphNav_Radio.setText(_translate("MainWindow", "Graph"))
         self.SummaryNav_Radio.setText(_translate("MainWindow", "Summary"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        self.home_button.setText(_translate("MainWindow", "Home"))
