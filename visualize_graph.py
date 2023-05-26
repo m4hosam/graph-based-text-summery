@@ -5,6 +5,24 @@ import matplotlib.pyplot as plt
 from pyvis.network import Network
 
 
+def extract_summary(G, min_score):
+    # Filter nodes based on score
+    high_score_nodes = [(node, data["score"]) for node, data in G.nodes(
+        data=True) if data["score"] > min_score]
+
+    # Sort nodes based on score in descending order
+    high_score_nodes = sorted(
+        high_score_nodes, key=lambda x: x[1], reverse=True)
+
+    # Extract node names (sentences) from the list
+    sentences = [node for node, _ in high_score_nodes]
+
+    # Combine sentences into a summary
+    summary = ' '.join(sentences)
+
+    return summary
+
+
 def visualize_graph(G, min_score):
 
     # Add edge_count attribute to the nodes
@@ -64,6 +82,8 @@ def visualize_graph(G, min_score):
 
     # # Add highlighted text
     # plt.text(x, y, highlighted_text, bbox=dict(facecolor='red', alpha=0.5))
+
+    print(extract_summary(G, 0.6))
 
     # Show the plot
     plt.show()

@@ -32,6 +32,10 @@ similarity_matrix, G = compute_sentence_similarity_graph(
 
 visualize_graph(G, 0.6)
 
+# print(G.nodes(data=True))
+
+###########################################
+
 # from gensim.summarization import summarize
 
 # input_text = """
