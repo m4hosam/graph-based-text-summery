@@ -1,3 +1,4 @@
+import random
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -5,17 +6,24 @@ from pyvis.network import Network
 
 
 def visualize_graph(G, min_score):
+
     # Add edge_count attribute to the nodes
     for node in G.nodes():
         edge_count = sum(1 for _, _, data in G.edges(
             node, data=True) if data['similarity'] > min_score)
         G.nodes[node]['edge_count'] = edge_count
+        G.nodes[node]['score'] = round(random.random(), 2)
 
     # Create node labels with edge_count information
-    node_labels = {
-        node: f"{node}\nCount: {data['edge_count']}" for node, data in G.nodes(data=True)}
+    # node_labels = {
+    #     node: f"{node}\nCount: {data['edge_count']}" for node, data in G.nodes(data=True)}
 
-    pos = nx.spring_layout(G, seed=42)
+    node_labels = {node: ' '.join(
+        node.split()[:5]) + f"...\nCount: {data['edge_count']}\nScore: {data['score']}" for node, data in G.nodes(data=True)}
+
+    # nx.draw_networkx_labels(graph, pos, labels=labels, font_weight='bold', font_size=8)
+
+    pos = nx.spring_layout(G, seed=43)
 
     # Get the edges with similarity scores greater than min_score
     green_edges = [(u, v) for (u, v, d) in G.edges(
@@ -39,6 +47,23 @@ def visualize_graph(G, min_score):
     # Draw edge labels with similarity scores
     edge_labels = nx.get_edge_attributes(G, 'similarity')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=6)
+
+    # edge_labels = nx.get_edge_attributes(G, 'similarity')
+    # formatted_edge_labels = {k: f"Similarity: {v:.2f}\nScore: {G.nodes[k[0]]['score']:.2f}"
+    #                          for k, v in edge_labels.items()}
+    # nx.draw_networkx_edge_labels(
+    #     G, pos, edge_labels=formatted_edge_labels, font_size=6)
+
+    # plt.axis('off')
+
+    # # Choose a node to highlight
+    # highlighted_text = node_labels["The plain green Norway spruce is displayed in the gallery's foyer."]
+
+    # # Get the position of the node
+    # x, y = pos["The plain green Norway spruce is displayed in the gallery's foyer."]
+
+    # # Add highlighted text
+    # plt.text(x, y, highlighted_text, bbox=dict(facecolor='red', alpha=0.5))
 
     # Show the plot
     plt.show()

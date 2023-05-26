@@ -2,19 +2,19 @@ import matplotlib.pyplot as plt
 import pprint
 import numpy as np
 import networkx as nx
-from transformers import DistilBertModel, DistilBertTokenizer
+# from transformers import DistilBertModel, DistilBertTokenizer
 from scipy.spatial.distance import cosine
 from visualize_graph import visualize_graph
 from embedding import sentence_vector_bert, sentence_vector_glove
 
-import warnings
-import logging
-warnings.simplefilter('ignore')
-logging.disable(logging.WARNING)
+# import warnings
+# import logging
+# warnings.simplefilter('ignore')
+# logging.disable(logging.WARNING)
 
-model_name = "distilbert-base-uncased"
-model = DistilBertModel.from_pretrained(model_name)
-tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+# model_name = "distilbert-base-uncased"
+# model = DistilBertModel.from_pretrained(model_name)
+# tokenizer = DistilBertTokenizer.from_pretrained(model_name)
 
 
 # def sentence_vector_bert(sentence, model, tokenizer):
