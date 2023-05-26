@@ -1,19 +1,48 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-
+from functions import *
 from pyvis.network import Network
+
+
+text = '''
+Gallery unveils interactive tree
+
+A Christmas tree that can receive text messages has been unveiled at London's Tate Britain art gallery.
+
+The spruce has an antenna which can receive Bluetooth texts sent by visitors to the Tate. The messages will be "unwrapped" by sculptor Richard Wentworth, who is responsible for decorating the tree with broken plates and light bulbs. It is the 17th year that the gallery has invited an artist to dress their Christmas tree. Artists who have decorated the Tate tree in previous years include Tracey Emin in 2002.
+
+The plain green Norway spruce is displayed in the gallery's foyer. Its light bulb adornments are dimmed, ordinary domestic ones joined together with string. The plates decorating the branches will be auctioned off for the children's charity ArtWorks. Wentworth worked as an assistant to sculptor Henry Moore in the late 1960s. His reputation as a sculptor grew in the 1980s, while he has been one of the most influential teachers during the last two decades. Wentworth is also known for his photography of mundane, everyday subjects such as a cigarette packet jammed under the wonky leg of a table.
+'''
+
+# Split the text into lines
+title, document = separate_title_and_paragraph(text)
+
+
+theme_words_arr = theme_words(document)
 
 
 def visualize_graph(G, min_score):
     # Add edge_count attribute to the nodes
+    print("\n\nOZET\n\n\n\n")
+
     for node in G.nodes():
         edge_count = sum(1 for _, _, data in G.edges(
             node, data=True) if data['similarity'] > min_score)
         G.nodes[node]['edge_count'] = edge_count
+        G.nodes[node]['score'] = round(sentence_score(node, theme_words_arr,
+                                                      title, edge_count/10), 4)
+
+    for node in G.nodes():
+        if G.nodes[node]['score'] >= 0.4:
+            print(G.nodes[node]['score'])
+            print(node)
 
     # Create node labels with edge_count information
     node_labels = {
         node: f"{node}\nCount: {data['edge_count']}" for node, data in G.nodes(data=True)}
+
+    score_labels = {
+        node: f"{node}\nScore: {data['score']}" for node, data in G.nodes(data=True)}
 
     pos = nx.spring_layout(G, seed=42)
 
@@ -33,12 +62,17 @@ def visualize_graph(G, min_score):
                            edge_color="gray", width=0.5)
 
     # Draw node labels with edge_count information
-    nx.draw_networkx_labels(G, pos, labels=node_labels,
+    nx.draw_networkx_labels(G, pos, labels=score_labels,
                             font_weight='bold', font_size=8)
+    # nx.draw_networkx_labels(G, pos, labels=score_labels,
+    #                         font_weight='bold', font_size=3)
 
     # Draw edge labels with similarity scores
     edge_labels = nx.get_edge_attributes(G, 'similarity')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=6)
+
+    # score_labels = nx.get_edge_attributes(G, 'score')
+    # nx.draw_networkx_edge_labels(G, pos, edge_labels=score_labels, font_size=6)
 
     # Show the plot
     plt.show()

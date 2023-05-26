@@ -58,18 +58,18 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
     score = 0
 
     # Parameter 1: ratio of proper nouns
-    tags = nltk.pos_tag(sentence_words)
+    tags = nltk.pos_tag(words)
     proper_nouns = [word for word,
                     tag in tags if tag == 'NNP' or tag == 'NNPS']
-    ratio_1 = len(proper_nouns) / len(sentence_words)
+    ratio_1 = len(proper_nouns) / len(words)
     # print(proper_nouns)
     print("params1:", ratio_1)
     score += ratio_1
 
     # Parameter 2: ratio of numerical data
-    numerical_data = [word for word in sentence_words if is_numerical(word)]
+    numerical_data = [word for word in words if is_numerical(word)]
     # print("Numirical", numerical_data)
-    ratio_2 = len(numerical_data) / len(sentence_words)
+    ratio_2 = len(numerical_data) / len(words)
     print("params2:", ratio_2)
     score += ratio_2
 
@@ -87,22 +87,22 @@ def sentence_score(sentence, theme_words_arr, title, ratio_3):
 
     title_words = [word for word in title_words if word not in stopwords]
     # Count how many words in title are in sentence
-    matching_words = [word for word in sentence_words if word in title_words]
-    ratio_4 = len(matching_words) / len(sentence_words)
+    matching_words = [word for word in words if word in title_words]
+    ratio_4 = len(matching_words) / len(words)
     print("params4:", ratio_4)
     score += ratio_4
 
     # Parameter 5: ratio of theme words
-    print("sentence: ", sentence_words)
+    print("sentence: ", words)
     similar_to_theme_words = 0
     for word in theme_words_arr:
         similar_to_theme_words += sentence.count(word)
     print("theme_words_arr: ", theme_words_arr)
-    ratio_5 = similar_to_theme_words/len(sentence_words)
+    ratio_5 = similar_to_theme_words/len(words)
     score += ratio_5
     print("params5: ", ratio_5)
 
-    score = score/4
+    score = score/2
 
     return score
 
@@ -142,10 +142,10 @@ def calculate_document_score(text):
     theme_words_arr = theme_words(document)
     print("Theme Words: ", theme_words_arr)
 
-    for sentence in document:
-        score = sentence_score(sentence, theme_words_arr,
-                               title, 1)
-        print(f"\n\nScore[{sentence}]: ", score, "\n\n")
+    # for sentence in document:
+    #     score = sentence_score(sentence, theme_words_arr,
+    #                            title, 1)
+    #     print(f"\n\nScore[{sentence}]: ", score, "\n\n")
 
 
 # Example usage
