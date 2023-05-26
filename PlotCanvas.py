@@ -7,7 +7,7 @@ import graph,embedding,preprocessing,visualize_graph
 from transformers import DistilBertModel, DistilBertTokenizer
 import pprint
 import networkx as nx
-
+from visualize_graph import visualize_graph
 import graph as g
 
 import random
@@ -21,12 +21,12 @@ class PlotCanvas(FigureCanvas):
   
         self.toolbar = NavigationToolbar(self.canvas, None)
 
-    def plot(self,sentences):
+    def plot(self,sentences, similarityThreshold, model, tokenizer, model_option):
         self.figure.clear()
         
-        model_name = "distilbert-base-uncased"
-        model = DistilBertModel.from_pretrained(model_name)
-        tokenizer = DistilBertTokenizer.from_pretrained(model_name)
+        # model_name = "distilbert-base-uncased"
+        # model = DistilBertModel.from_pretrained(model_name)
+        # tokenizer = DistilBertTokenizer.from_pretrained(model_name)
         # sentences = ['The cat sits outside',
         #     'A man is playing guitar',
         #     'I love pasta',
@@ -36,17 +36,23 @@ class PlotCanvas(FigureCanvas):
         #     'The new movie is so great',
         #     'Do you like pizza?']
 
+
+
         similarity_matrix, graph = g.compute_sentence_similarity_graph(
-            sentences, model, tokenizer, method='bert')
+            sentences, model, tokenizer, method=model_option)
+        
+        #visualize graph
+        visualize_graph(graph, similarityThreshold)
 
         print("Similarity Matrix:")
         pprint.pprint(similarity_matrix)
         
-        pos = nx.spring_layout(graph, seed=42)
-        nx.draw(graph, pos, with_labels=True, font_weight='bold',
-                node_color='skyblue', font_size=8, node_size=1000)
+        # pos = nx.spring_layout(graph, seed=42)
+        # nx.draw(graph, pos, with_labels=True, font_weight='bold',
+        #         node_color='skyblue', font_size=8, node_size=1000)
 
-        edge_labels = nx.get_edge_attributes(graph, 'similarity')
-        nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels, font_size=6)
-        
+        # edge_labels = nx.get_edge_attributes(graph, 'similarity')
+        # nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels, font_size=6)
+
+        self.figure.tight_layout()
         self.canvas.draw_idle()

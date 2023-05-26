@@ -41,7 +41,7 @@ def visualize_graph(G, min_score):
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=6)
 
     # Show the plot
-    plt.show()
+    # plt.show()
 
 
 def visualize_graph_pyvis(G):

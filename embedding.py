@@ -15,11 +15,11 @@ logging.disable(logging.WARNING)
 
 # Load the model
 
-def get_model(model_type, path):
+def get_model(model_type):
     if model_type == "glove":
-        return load_glove_model(path), None
+        return load_glove_model(), None
     elif model_type == "bert":
-        return load_bert_model(path)
+        return load_bert_model()
     elif model_type == "distilbert":
         return load_bert_model(model_directory="models/distilbert", model_name='distilbert-base-uncased')
     else:
@@ -34,10 +34,10 @@ def load_glove_model(file_path='models/glove.6B.50d.word2vec.txt'):
 
 def load_bert_model(model_directory="models/bert", model_name="bert-base-uncased"):
     # Load BERT model and tokenizer
-    bert_model = AutoModel.from_pretrained(model_directory)
+    bert_model = AutoModel.from_pretrained(model_name)
     # local_files_only=True
     # bert_model.eval()
-    bert_tokenizer = AutoTokenizer.from_pretrained(model_directory)
+    bert_tokenizer = AutoTokenizer.from_pretrained(model_name)
     return bert_model, bert_tokenizer
 
 

@@ -19,5 +19,6 @@ title = [i for i in newLineSep if i][0]
 mainTextSentences = [i for i in mainTextSentences if i]
 summaryTextSentences = [i for i in summaryTextSentences if i]
 print(title)
+mainTextSentences[0] = mainTextSentences[0].replace(title,'') 
 print(mainTextSentences)
 print(summaryTextSentences)

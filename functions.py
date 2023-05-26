@@ -7,11 +7,17 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from PlotCanvas import PlotCanvas
+from embedding import get_model
 
 class MainWindow(object):
     def __init__(self):
         self.main_win = QMainWindow()
         self.ui = Ui_MainWindow()
+
+        self.glove_model, self.glove_tokenizer = get_model('glove')
+        self.bert_model, self.bert_tokenizer = get_model('bert')
+
+
         self.ui.setupUi(self.main_win)
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.NagivationGroupBox.hide()
@@ -28,8 +34,8 @@ class MainWindow(object):
     def show(self):
         self.main_win.show()
     
-    def generateCanvas(self, mainText):
-        self.m.plot(mainText)
+    def generateCanvas(self, mainText, benzerlikThresholdu, model, tokenizer, model_option):
+        self.m.plot(mainText, benzerlikThresholdu, model, tokenizer, model_option)
 
     def readFile(self, fname):
         file = open(fname,'r', encoding='utf-8')
@@ -45,10 +51,11 @@ class MainWindow(object):
 
         title = [i for i in newLineSep if i][0]
         mainTextSentences = [i for i in mainTextSentences if i]
+        mainTextSentences[0] = mainTextSentences[0].replace(title,'') 
         summaryTextSentences = [i for i in summaryTextSentences if i]
-        print(title)
-        print(mainTextSentences)
-        print(summaryTextSentences)
+        # print(title)
+        # print(mainTextSentences)
+        # print(summaryTextSentences)
 
         return title, mainTextSentences, summaryTextSentences
 
@@ -95,24 +102,32 @@ class MainWindow(object):
     def reloadGraph(self):
         benzerlikThreshold = self.ui.BenzerlikThresholdTextEdit.toPlainText()
         cumleThreshold = self.ui.BenzerlikThresholdTextEdit_2.toPlainText()
-        model = 'glove' if self.ui.GloveModel_Radio.isChecked() else 'bert'
+        model_option = 'glove' if self.ui.GloveModel_Radio.isChecked() else 'bert'
+        # model, tokenizer = get_model(model_option)
+
+        if model_option == 'bert':
+            model = self.bert_model
+            tokenizer = self.bert_tokenizer
+        else:
+            model = self.glove_model
+            tokenizer = self.glove_tokenizer
 
         [title, mainText, summaryText] = self.readFile(self.fname)
 
         if benzerlikThreshold == "" or cumleThreshold == "":
             self.ui.optionsErrorLabel.setText("please enter numbers into both fields")
             return
-        elif not benzerlikThreshold.isnumeric() or not cumleThreshold.isnumeric():
-            self.ui.optionsErrorLabel.setText("please make sure both fields contain only numbers")
-            return
+        # elif not benzerlikThreshold.isnumeric() or not cumleThreshold.isnumeric():
+        #     self.ui.optionsErrorLabel.setText("please make sure both fields contain only numbers")
+        #     return
         
         #run graph function
         #run summary function
         #redraw graph and rewrite summary
         
-        self.generateCanvas(mainText)
+        self.generateCanvas(mainText, float(benzerlikThreshold), model, tokenizer, model_option)
         self.ui.optionsErrorLabel.setText("")
-        print(model)
+        print(model_option)
         print(benzerlikThreshold, cumleThreshold)
         print(float(benzerlikThreshold) + float(cumleThreshold))
 
